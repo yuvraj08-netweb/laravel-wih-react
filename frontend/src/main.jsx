@@ -7,8 +7,9 @@ import Error from "./error/Error.jsx";
 import Home from "./Home/Home.jsx";
 import SignUp from "./Views/SignUp.jsx";
 import Login from "./Views/Login.jsx";
-import DefaultLayout from "./Components/DefaultLayout/DefaultLayout.jsx"
-import GuestLayout from "./Components/GuestLayout/GuestLayout.jsx"
+import DefaultLayout from "./Components/DefaultLayout/DefaultLayout.jsx";
+import GuestLayout from "./Components/GuestLayout/GuestLayout.jsx";
+import { AuthProvider } from "./context/contextProvide.jsx";
 
 const routes = createBrowserRouter([
   {
@@ -42,6 +43,8 @@ const routes = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     {/* <App /> */}
-    <RouterProvider router={routes} />
+    <AuthProvider>
+      <RouterProvider router={routes} />
+    </AuthProvider>
   </StrictMode>
 );
