@@ -1,7 +1,9 @@
 function Home() {
   return (
     <>
-      <h4>home</h4>
+      <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>
     </>
   );
 }
