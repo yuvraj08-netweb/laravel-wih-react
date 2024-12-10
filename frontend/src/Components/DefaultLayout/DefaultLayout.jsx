@@ -1,16 +1,16 @@
-import { Outlet } from "react-router-dom";
 
-import Header from "../Header/Header.jsx";
+import { Navigate } from "react-router-dom";
 import { UseAuth } from "../../context/contextProvide.jsx";
+import Dashboard from "../dashboard/Dashboard.jsx";
 function DefaultLayout() {
   const { token } = UseAuth();
   if (!token) {
-    return;
+    // return <Navigate to="/login" />;
   }
   return (
     <>
-      <Header />
-      <Outlet />
+
+      <Dashboard />
     </>
   );
 }
