@@ -5,7 +5,7 @@ import Dashboard from "../dashboard/Dashboard.jsx";
 function DefaultLayout() {
   const { token } = UseAuth();
   if (!token) {
-    // return <Navigate to="/login" />;
+    return <Navigate to="/login" />;
   }
   return (
     <>
