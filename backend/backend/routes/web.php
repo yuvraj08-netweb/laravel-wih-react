@@ -8,4 +8,4 @@ Route::get('/', function () {
 });
 
 
-Route::post('/signup', [AuthController::class, 'signUpController']);
+Route::post('/api/signup', [AuthController::class, 'signUpController']);
