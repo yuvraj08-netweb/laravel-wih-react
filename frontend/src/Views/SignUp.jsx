@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import axiosClient from "../Views/axois-client.js";
 import React from "react";
 
+import {UseAuth} from "../context/contextProvide.jsx"
+
+
+
 const InputField = React.forwardRef(({ label, type, name, id, placeholder, required }, ref) => (
   <div>
     <label htmlFor={id} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -23,6 +27,8 @@ const InputField = React.forwardRef(({ label, type, name, id, placeholder, requi
 
 const SignUp = () => {
 
+  let {setToken,setUser}=UseAuth();
+
   let nameRef = useRef();
   let emailRef = useRef();
   let passwordRef = useRef();
@@ -36,9 +42,10 @@ const SignUp = () => {
       password: passwordRef.current.value,
       password_confirm: passwordConfirmRef.current.value,
     }
-    axiosClient.post("/signup", formData).then((response) => {
+    axiosClient.post('/signup', formData).then((response) => {
       try {
-        console.log(response);
+        console.log(response.data.token);
+     
 
       } catch (error) {
         console.log(error);
