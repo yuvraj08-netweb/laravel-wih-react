@@ -1,11 +1,15 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import axiosClient from "../Views/axois-client.js";
+import React from "react";
 
-const InputField = ({ label, type, name, id, placeholder, required }) => (
+const InputField = React.forwardRef(({ label, type, name, id, placeholder, required }, ref) => (
   <div>
     <label htmlFor={id} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
       {label}
     </label>
     <input
+      ref={ref}
       type={type}
       name={name}
       id={id}
@@ -14,9 +18,41 @@ const InputField = ({ label, type, name, id, placeholder, required }) => (
       className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
     />
   </div>
-);
+));
+
 
 const SignUp = () => {
+
+  let nameRef = useRef();
+  let emailRef = useRef();
+  let passwordRef = useRef();
+  let passwordConfirmRef = useRef();
+
+  function submitForm(e) {
+    e.preventDefault();
+    let formData = {
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      password_confirm: passwordConfirmRef.current.value,
+    }
+    axiosClient.post("/signup", formData).then((response) => {
+      try {
+        console.log(response);
+
+      } catch (error) {
+        console.log(error);
+
+      }
+
+
+    }).catch((err) => {
+      console.log(err);
+
+    })
+
+  }
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -25,8 +61,9 @@ const SignUp = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create your account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" action="#" onSubmit={submitForm}>
               <InputField
+                ref={nameRef}
                 label="Your name"
                 type="text"
                 name="name"
@@ -35,6 +72,7 @@ const SignUp = () => {
                 required
               />
               <InputField
+                ref={emailRef}
                 label="Your email"
                 type="email"
                 name="email"
@@ -43,6 +81,7 @@ const SignUp = () => {
                 required
               />
               <InputField
+                ref={passwordRef}
                 label="Password"
                 type="password"
                 name="password"
@@ -51,6 +90,7 @@ const SignUp = () => {
                 required
               />
               <InputField
+                ref={passwordConfirmRef}
                 label="Confirm Password"
                 type="password"
                 name="confirmPassword"
