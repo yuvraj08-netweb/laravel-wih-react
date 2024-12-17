@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axiosClient from "../Views/axois-client.js";
 import React from "react";
 
-import {UseAuth} from "../context/contextProvide.jsx"
+import {UseAuth,AuthProvider} from "../context/contextProvide.jsx"
 
 
 
@@ -27,13 +27,14 @@ const InputField = React.forwardRef(({ label, type, name, id, placeholder, requi
 
 const SignUp = () => {
 
-  let {setToken,setUser}=UseAuth();
+ 
 
   let nameRef = useRef();
   let emailRef = useRef();
   let passwordRef = useRef();
   let passwordConfirmRef = useRef();
-
+  let {setToken,setUser}=UseAuth();
+     
   function submitForm(e) {
     e.preventDefault();
     let formData = {
@@ -42,10 +43,14 @@ const SignUp = () => {
       password: passwordRef.current.value,
       password_confirm: passwordConfirmRef.current.value,
     }
-    axiosClient.post('/signup', formData).then((response) => {
+    console.log(formData);
+    
+    axiosClient.post('/signup', formData).then(({data}) => {
       try {
-        console.log(response.data.token);
-     
+        console.log(data);
+        
+       setToken(data.token);
+      
 
       } catch (error) {
         console.log(error);
